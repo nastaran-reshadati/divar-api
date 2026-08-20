@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build output
+dist/
+build/
+coverage/
+.next/
+.nuxt/
+out/
+
+# Cache
+.cache/
+.tmp/
+temp/
+*.tsbuildinfo
+
+# Editor / IDE settings
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Local database files (if applicable)
+*.sqlite
+*.sqlite3
+*.db
+
+# Optional: local uploads — اگر فایل‌های آپلودی نباید روی گیت باشند
+uploads/
