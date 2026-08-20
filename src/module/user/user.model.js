@@ -3,7 +3,7 @@
 const { Schema, default: mongoose } = require("mongoose");
 
 const OTPSchema = new Schema({
-  code: { type: String, require: false, default: undefined },
+  code: { type: String, required: false, default: undefined },
   expiresAt: { type: Number, required: false, default: 0 },
 });
 const userSchema = new Schema(

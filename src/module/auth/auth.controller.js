@@ -13,10 +13,9 @@ class AuthController {
     try {
       const { mobile } = req.body;
       await this.#service.sendOTP(mobile);
-      return {
+      return res.json({
         message: AuthMeessage.SendOtpSuccessfully,
-      };
-      this.#service.checkOTP();
+      })
     } catch (error) {
       next(error);
     }
@@ -24,6 +23,12 @@ class AuthController {
 
   async checkOTP(req, res, next) {
     try {
+
+       const { mobile  , code} = req.body;
+      await this.#service.checkOTP(mobile , code);
+      return res.json({
+        message: AuthMeessage.LoginSuccessfully,
+      })
     } catch (error) {
       next(error);
     }

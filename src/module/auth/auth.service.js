@@ -13,8 +13,8 @@ class AuthService {
   }
   async sendOTP(mobile) {
     const user = await this.#model.findOne({ mobile });
-    const now = new Date().getTime();
 
+    const now = new Date().getTime();
     const code = randomInt(10000, 99999);
     const expiresAt = now + 1000 * 60 * 2;
 
@@ -22,6 +22,7 @@ class AuthService {
       code,
       expiresAt,
     };
+    
     if (!user) {
       const newUser = await this.#model.create({
         mobile,
@@ -39,7 +40,33 @@ class AuthService {
     return user;
   }
 
-  async checkOTP(mobile, code) {}
+  async checkOTP(mobile, code) {
+   const user = await this.checkExistByMobile(mobile)
+   const now = Date.now();
+
+   if(!user.otp || !user.otp.code){
+    throw new createHttpError.Unauthorized(AuthMeessage.OtpCodeIsRequired)
+   }
+   if (user.otp.expiresAt < now) {
+     throw new createHttpError.Unauthorized(AuthMeessage.OtpCodeExpired);
+   }
+
+   if( String(user.otp.code) !== String(code)){
+    throw new createHttpError.Unauthorized(AuthMeessage.OtpCodeIsIncorrect)
+   }
+
+
+  if(!user.verifiedMobile){
+    user.verifiedMobile =  true
+
+    user.otp.code = undefined;
+    user.otp.expiresAt = 0;
+
+    await user.save()
+  }
+
+  return user
+  }
 
   async logOut(userId) {}
 
