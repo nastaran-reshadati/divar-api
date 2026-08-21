@@ -26,7 +26,7 @@ class AuthController {
     try {
       const { mobile, code } = req.body;
       const token = await this.#service.checkOTP(mobile, code);
-      res.cookie("access-token", token, {
+      res.cookie("access_token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === NodeEnv.Production,
         sameSite: "lax",

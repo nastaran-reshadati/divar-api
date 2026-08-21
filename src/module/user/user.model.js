@@ -12,7 +12,7 @@ const userSchema = new Schema(
     mobile: { type: String, required: true, unique: true },
     otp: { type: OTPSchema, required: true },
     verifiedMobile: { type: Boolean, default: false, required: true },
-    accessToken : { type: String},
+    accessToken: { type: String },
   },
   { timestamps: true },
 );
