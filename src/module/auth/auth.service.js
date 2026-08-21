@@ -30,7 +30,6 @@ class AuthService {
         otp,
       });
 
-      console.log(newUser)
       return newUser;
       //create new user
     }
@@ -46,7 +45,6 @@ class AuthService {
   async checkOTP(mobile, code) {
    const user = await this.checkExistByMobile(mobile)
    const now = Date.now();
-   console.log(user)
    if(!user.otp || !user.otp.code){
     throw new createHttpError.Unauthorized(AuthMeessage.OtpCodeIsRequired)
    }
@@ -78,7 +76,6 @@ class AuthService {
 
   async checkExistByMobile(mobile) {
     const user = await this.#model.findOne({ mobile });
-    console.log('user' , user)
     if (!user) throw new createHttpError.NotFound(AuthMeessage.Notfound);
     return user;
   }
