@@ -25,9 +25,10 @@ class AuthController {
     try {
 
        const { mobile  , code} = req.body;
-      await this.#service.checkOTP(mobile , code);
+     const result =  await this.#service.checkOTP(mobile , code);
       return res.json({
         message: AuthMeessage.LoginSuccessfully,
+        data : result
       })
     } catch (error) {
       next(error);
