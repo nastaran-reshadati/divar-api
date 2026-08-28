@@ -18,7 +18,7 @@ const Authorization = async (req, res, next) => {
       const user = await userModel
         .findById(data.id, {
           accessToken: 0,
-          otp: 0,
+          otp: 0, verifiedMobile : 0  , createdAt : 0 , updatedAt :0 , __v : 0
         })
         .lean();
 
@@ -31,7 +31,9 @@ const Authorization = async (req, res, next) => {
       return next();
     }
     throw new createHttpError.Unauthorized(AuthorizationMessage.InvalidToken);
-  } catch (error) {}
+  } catch (error) {
+    next(error)
+  }
 };
 
 module.exports = Authorization;
