@@ -77,4 +77,15 @@
  *         description: User not found
  */
 
+/**
+ * @swagger
+ * /auth/log-out:
+ *   get:
+ *     summary: Check OTP
+ *     tags:
+ *       - Auth
+ *     responses:
+ *       200:
+ *         description: Log Out Successfully
+ */
 

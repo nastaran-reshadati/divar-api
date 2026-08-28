@@ -8,7 +8,9 @@ const AuthMeessage = {
   OtpCodeIsRequired: "OTP code is required",
   OtpCodeIsIncorrect: "OTP code is incorrect",
   MobileVerifiedSuccessfully: "Mobile verified successfully",
-  LoginSuccessfully : "your Login Successfully"
+  LoginSuccessfully : "your Login Successfully" , 
+  LogoutSuccessfully : 'log out successfully'
+
 };
 
 module.exports = AuthMeessage;

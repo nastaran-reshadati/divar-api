@@ -7,7 +7,6 @@ const userModel = require("../../module/user/user.model");
 const Authorization = async (req, res, next) => {
   try {
     const token = req.cookies?.access_token;
-
     if (!token) {
       throw new createHttpError.Unauthorized(AuthorizationMessage.Unauthorized);
     }
@@ -18,7 +17,11 @@ const Authorization = async (req, res, next) => {
       const user = await userModel
         .findById(data.id, {
           accessToken: 0,
-          otp: 0, verifiedMobile : 0  , createdAt : 0 , updatedAt :0 , __v : 0
+          otp: 0,
+          verifiedMobile: 0,
+          createdAt: 0,
+          updatedAt: 0,
+          __v: 0,
         })
         .lean();
 
@@ -32,7 +35,7 @@ const Authorization = async (req, res, next) => {
     }
     throw new createHttpError.Unauthorized(AuthorizationMessage.InvalidToken);
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 

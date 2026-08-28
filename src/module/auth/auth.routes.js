@@ -2,12 +2,13 @@
 
 const { Router } = require("express");
 const authController = require("./auth.controller");
+const Authorization = require("../../middleware/guard/authorization.guard");
 
 const router = Router();
 
 router.post("/send-otp", authController.sendOTP);
 router.post("/check-otp", authController.checkOTP);
-router.post("/logout", authController.logOut);
+router.get("/log-out", Authorization, authController.logOut);
 
 module.exports = {
   AuthRouter: router,
