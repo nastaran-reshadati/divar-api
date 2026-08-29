@@ -6,7 +6,7 @@ const CategorySchema = new Schema(
   {
     name: { type: String, required: true, trim: true },
     slug: { type: String, required: true, trim: true, index: true },
-    icon: { type: String, default: null },
+    icon: { type: String, required: true },
     parent: {
       type: Types.ObjectId,
       ref: "Category",
@@ -19,7 +19,12 @@ const CategorySchema = new Schema(
       default: [],
     },
   },
-  { virtuals: true, versionKey: false, id: false },
+  { versionKey: false, id: false, toJSON: { virtuals: true 
+
+
+
+
+  } },
 );
 
 CategorySchema.virtual("children", {
