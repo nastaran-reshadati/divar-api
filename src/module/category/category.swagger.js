@@ -17,7 +17,7 @@
  *       properties:
  *         name:
  *           type: string
- *           description: نام دسته‌بندی
+ *           description: نام دسته‌بند
  *           example: املاک
  *         slug:
  *           type: string
@@ -62,4 +62,25 @@
  *     responses:
  *       200:
  *         description: success
+ * 
+ * /category/{id}:
+ *   delete:
+ *     summary: حذف دسته‌بندی بر اساس شناسه
+ *     tags:
+ *       - Category
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: شناسه دسته‌بندی مورد نظر
+ *     responses:
+ *       200:
+ *         description: دسته‌بندی با موفقیت حذف شد
+ *       404:
+ *         description: دسته‌بندی پیدا نشد
+ * 
+ * 
  */
+
