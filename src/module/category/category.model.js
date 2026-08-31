@@ -27,6 +27,9 @@ CategorySchema.virtual("children", {
   localField: "_id",
   foreignField: "parent",
 });
+//  function autoPopulate(next){
+//   this.populate([{}])
+//  }
 
 const CategoryModel = model("Category", CategorySchema);
 module.exports = CategoryModel;

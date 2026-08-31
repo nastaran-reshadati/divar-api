@@ -2,10 +2,10 @@
 
 const autoBind = require("auto-bind");
 const CategoryModel = require("./category.model");
-const { isValidObjectId } = require("mongoose");
+const { isValidObjectId, Types } = require("mongoose");
 const createHttpError = require("http-errors");
 const categoryMessages = require("./category.messages");
-
+const slugify = require("slugify");
 class CategoryService {
   #model;
   #optionModel;
@@ -14,8 +14,13 @@ class CategoryService {
     this.#model = CategoryModel;
   }
   async create(categoryDto) {
+    console.log("categoryDto", categoryDto);
+    console.log(isValidObjectId(categoryDto.parent));
+
     if (categoryDto?.parent && isValidObjectId(categoryDto.parent)) {
+      console.log("categoryDto?.parent : ", categoryDto?.parent);
       const existCategory = await this.checkExistById(categoryDto.parent);
+      console.log("existCategory : ", existCategory);
       categoryDto.parent = existCategory._id.toString();
       categoryDto.parents = [
         ...new Set(
@@ -25,16 +30,22 @@ class CategoryService {
         ),
       ];
 
-      if (categoryDto?.slug) {
-        categoryDto.slug = slugify(categoryDto.slug);
-        await this.alreadyExistBySlug(categoryDto.slug);
-      } else {
-        categoryDto.slug = slugify(categoryDto.name);
-        await this.alreadyExistBySlug(categoryDto.slug);
-      }
-      const category = await this.#model.create(categoryDto);
-      return category;
+      console.log("categoryDto.parent : ", categoryDto.parent);
+      console.log("categoryDto.parents : ", categoryDto.parents);
+    } else {
+      delete categoryDto.parent;
+      categoryDto.parents = [];
     }
+    if (categoryDto?.slug) {
+      categoryDto.slug = slugify(categoryDto.slug);
+      console.log("categoryDto.slug : ", categoryDto.slug);
+      await this.alreadyExistBySlug(categoryDto.slug);
+    } else {
+      categoryDto.slug = slugify(categoryDto.name);
+      await this.alreadyExistBySlug(categoryDto.slug);
+    }
+    const category = await this.#model.create(categoryDto);
+    return category;
   }
 
   async remove(id) {
@@ -45,7 +56,10 @@ class CategoryService {
   }
 
   async find() {
-    return await this.#model.find({ parent: { $exists: false } });
+    return await this.#model.find({ parent : {$exists : false
+
+
+    }}).populate([{path : "children" , populate : {path : 'children'}}])
     //Get Root Categories
   }
 
@@ -56,7 +70,7 @@ class CategoryService {
     return category;
   }
   async alreadyExistBySlug(slug) {
-    const category = await this.#model.findOne(slug);
+    const category = await this.#model.findOne({ slug });
     if (category)
       throw new createHttpError.Conflict(categoryMessages.alreadyExist);
     return null;
