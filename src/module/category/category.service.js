@@ -56,12 +56,9 @@ class CategoryService {
   }
 
   async find() {
-    return await this.#model.find({ parent : {$exists : false
-
-
-    }}).populate([{path : "children" , populate : {path : 'children'}}])
-    //Get Root Categories
+    return await this.#model.find({ parent: { $exists: false } });
   }
+
 
   async checkExistById(id) {
     const category = await this.#model.findById(id);
