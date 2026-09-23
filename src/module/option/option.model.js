@@ -9,5 +9,6 @@ const OptionSchema = new Schema({
     required: {type: Boolean, required: true, default: false},
     category: {type: Types.ObjectId, ref: "Category", required: true}
 });
+
 const OptionModel = model("option", OptionSchema);
 module.exports = OptionModel;
