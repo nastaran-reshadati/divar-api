@@ -65,13 +65,26 @@ class OptionService {
   }
 
 
+  async findById(id){
+     return await this.checkExistById(id)
+  }
+  async findByCategoryId(categoryId){
+        return await this.#model.find({category}, {__v: 0}).populate([{path: "category", select: {name: 1, slug: 1}}]);
+
+  }
+
  
   async alreadyExistBySlug(slug) {
 
     return null;
   }
 
-
+ async checkExistById(id) {
+    const option = await this.#model.findById(id);
+    if (!option)
+      throw new createHttpError.NotFound(optionMessages.NotFound);
+    return option;
+  }
 
   async checkExistByCategoryAndKey(key , category , exceptionId  = null){
      const isExist = await this.#model.findOne({

@@ -93,9 +93,28 @@
  *       200:
  *         description: Option ها با موفقیت دریافت شدند
  *
- * /option/{categoryId}:
- *   delete:
- *     summary: حذف Option بر اساس شناسه
+ * /options/{id}:
+ *   get:
+ *     summary: دریافت یک Option بر اساس شناسه
+ *     tags:
+ *       - Option
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: شناسه Option
+ *         example: 6abfd6621d7a87eb5f3e872d
+ *     responses:
+ *       200:
+ *         description: Option با موفقیت دریافت شد
+ *       404:
+ *         description: Option پیدا نشد
+ *
+ * /options/category/{categoryId}:
+ *   get:
+ *     summary: دریافت Option های یک Category
  *     tags:
  *       - Option
  *     parameters:
@@ -104,11 +123,11 @@
  *         required: true
  *         schema:
  *           type: string
- *         description: شناسه Option
- *         example: 68b123456789abcdef123456
+ *         description: شناسه Category
+ *         example: 6a944f41d8e71639ac2cfb15
  *     responses:
  *       200:
- *         description: Option با موفقیت حذف شد
+ *         description: Option های Category با موفقیت دریافت شدند
  *       404:
- *         description: Option پیدا نشد
+ *         description: Category پیدا نشد
  */
