@@ -11,6 +11,6 @@ const { optionRouter } = require("./module/option/option.routes");
 mainRouter.use("/auth", AuthRouter);
 mainRouter.use("/user", userRouter);
 mainRouter.use('/category' , categoryRouter)
-mainRouter.use('/option' , optionRouter)
+mainRouter.use('/options' , optionRouter)
 
 module.exports = mainRouter;

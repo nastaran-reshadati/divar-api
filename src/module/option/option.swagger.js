@@ -65,7 +65,7 @@
 
 /**
  * @swagger
- * /option:
+ * /options:
  *   post:
  *     summary: create new option for category
  *     tags:

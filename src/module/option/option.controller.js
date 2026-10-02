@@ -49,7 +49,15 @@ class OptionController {
   }
 
   async find(req, res, next) {
-    
+    try{
+     const options= await this.#service.find()
+
+     return res.status(HttpCodes.OK).json({
+      options
+     })
+    }catch(err){
+     next(err)
+    }
   }
 }
 
