@@ -130,4 +130,17 @@
  *         description: Option های Category با موفقیت دریافت شدند
  *       404:
  *         description: Category پیدا نشد
+ * @swagger
+ * /options/by-category-slug/{slug}:
+ *  get:
+ *      summary: get all options of category
+ *      tags:
+ *          -   Option
+ *      parameters:
+ *          -   in: path        
+ *              name: slug
+ *              type: string
+ *      responses:
+ *          200: 
+ *              description: successfully
  */

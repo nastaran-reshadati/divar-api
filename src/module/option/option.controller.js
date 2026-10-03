@@ -66,6 +66,20 @@ class OptionController {
       next(error);
     }
   }
+  async findByCategorySlug(req, res, next) {
+
+    try {
+       const {slug} = req.params
+       console.log(req.params)
+       const options = await this.#service.findByCategorySlug(slug)
+      return res.status(HttpCodes.OK).json({
+        options
+      })
+     
+    } catch (error) {
+      next(error);
+    }
+  }
 
   async find(req, res, next) {
     try{
