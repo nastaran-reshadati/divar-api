@@ -107,7 +107,11 @@ class OptionService {
             {$match : {categorySlug  : slug}}
 
     ])
+
+
     console.log('findByCategorySlug' ,options)
+
+    return options
     // console.dir(options[0], { depth: null });
   }
 
