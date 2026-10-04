@@ -67,6 +67,11 @@ class OptionService {
   async findById(id){
      return await this.checkExistById(id)
   }
+  async removeById(id){
+    console.log(id)
+    //  await this.checkExistById(id)
+    //  return await this.#model.deleteOne({_id : id})
+  }
   async findByCategoryId(categoryId) {
     if (!isValidObjectId(categoryId)) {
       throw new createHttpError.BadRequest(optionMessages.InvalidCategory);

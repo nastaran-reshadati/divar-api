@@ -10,6 +10,7 @@ router.post("/", optionController.create);
 router.get("/category/:categoryId", optionController.findByCategoryId);
 router.get("/by-category-slug/:slug", optionController.findByCategorySlug)
 router.get("/:id", optionController.findById);
+router.delete("/:id", optionController.removeById);
 router.get("/", optionController.find);
 // router.get("/:id", optionController.remove);
 
