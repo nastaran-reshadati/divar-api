@@ -3,11 +3,10 @@
 const autoBind = require("auto-bind");
 const { isValidObjectId, Types } = require("mongoose");
 const createHttpError = require("http-errors");
-const categoryMessages = require("./option.messages");
 const slugify = require("slugify");
 const OptionModel = require("./option.model");
 const optionMessages = require("./option.messages");
-const categoryService = require('../category/category.service')
+const categoryService = require("../category/category.service");
 const { isTrue, isFalse } = require("../../common/utils/functions");
 class OptionService {
   #model;
@@ -18,38 +17,38 @@ class OptionService {
     this.#categoryService= categoryService
   }
   async create(optionDto) {
-    const category = await this.#categoryService.checkExistById(optionDto.category)
-    optionDto.category= category._id
-    console.log('category' , category)
-
-    optionDto.key = slugify(optionDto.key , {
-      trim : true ,
-      replacement : "_",
-      lower : true
-    })
-
-    await this.checkExistByCategoryAndKey(optionDto.key , optionDto.category)
-    if(optionDto?.enum && typeof optionDto.enum === 'string'){
-      optionDto.enum = optionDto.enum.split(',')
-    }else if(!Array.isArray(optionDto.enum)){
-      optionDto.enum = []
+    if (!optionDto.category) {
+      throw new createHttpError.BadRequest(optionMessages.CategoryRequired);
+    }
+    if (!isValidObjectId(optionDto.category)) {
+      throw new createHttpError.BadRequest(optionMessages.InvalidCategory);
     }
 
-    if(isTrue(optionDto.required)){
-      optionDto.required = true
+    const category = await this.#categoryService.checkExistById(optionDto.category);
+    optionDto.category = category._id;
+
+    optionDto.key = slugify(optionDto.key, {
+      trim: true,
+      replacement: "_",
+      lower: true,
+    });
+
+    await this.checkExistByCategoryAndKey(optionDto.key, optionDto.category);
+    if (optionDto?.enum && typeof optionDto.enum === "string") {
+      optionDto.enum = optionDto.enum.split(",");
+    } else if (!Array.isArray(optionDto.enum)) {
+      optionDto.enum = [];
     }
 
-    if(isFalse(optionDto.required)){
-      optionDto.required = false
+    if (isTrue(optionDto.required)) {
+      optionDto.required = true;
     }
-  
-    const option = await this.#model.create(optionDto)
 
-    console.log(option)
-   return option
-    //console.log('optionDTO' , optionDto)
-    // return this.#model.create(optionDto);
-    
+    if (isFalse(optionDto.required)) {
+      optionDto.required = false;
+    }
+
+    return this.#model.create(optionDto);
   }
 
   async remove(id) {
@@ -68,8 +67,14 @@ class OptionService {
   async findById(id){
      return await this.checkExistById(id)
   }
-  async findByCategoryId(categoryId){
-        return await this.#model.find({category}, {__v: 0}).populate([{path: "category", select: {name: 1, slug: 1}}]);
+  async findByCategoryId(categoryId) {
+    if (!isValidObjectId(categoryId)) {
+      throw new createHttpError.BadRequest(optionMessages.InvalidCategory);
+    }
+    await this.#categoryService.checkExistById(categoryId);
+    return this.#model
+      .find({ category: categoryId }, { __v: 0 })
+      .populate([{ path: "category", select: { name: 1, slug: 1 } }]);
   }
   
   async findByCategorySlug(slug){

@@ -1,10 +1,12 @@
 /** @format */
 
 const optionMessages = {
-  Created: "option category successfully",
+  Created: "option created successfully",
   NotFound: "option not found",
-  alreadyExist: "Already Exist",
-  Deleted: "deleted option Successfully",
+  alreadyExist: "option already exists",
+  Deleted: "option deleted successfully",
+  CategoryRequired: "category is required",
+  InvalidCategory: "category id is invalid",
 };
 
 module.exports = optionMessages;

@@ -59,8 +59,8 @@
  *
  *         category:
  *           type: string
- *           description: شناسه دسته‌بندی مربوط به Option
- *           example: 68b123456789abcdef123456
+ *           description: شناسه واقعی Category از GET /category یا POST /category
+ *           example: 6ac202e86d22da63dabb6773
  */
 
 /**
