@@ -71,7 +71,7 @@ class OptionController {
   async removeById(req, res, next) {
     try {
       const {id} = req.params
-       await this.#service.re(id)
+       await this.#service.removeById(id)
       return res.status(HttpCodes.OK).json({
         message : optionMessages.Deleted
       })
