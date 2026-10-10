@@ -33,6 +33,27 @@ class OptionController {
     }
   }
 
+
+    async update(req, res, next) {
+    try {
+      const { title, key, type, enum: enumValues, guid, required, category } = req.body; 
+      const {id} = req.params
+      await this.#service.create({
+        id , title,
+        key,
+        type,
+        enum: enumValues,
+        guid,
+        required,
+        category
+      });
+
+      return res.status(HttpCodes.CREATED).json({ message: optionMessages.Updated });
+
+    } catch (error) {
+      next(error);
+    }
+  }
   async findByCategoryId(req, res, next) {
     try {
      

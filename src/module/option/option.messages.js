@@ -7,6 +7,7 @@ const optionMessages = {
   Deleted: "option deleted successfully",
   CategoryRequired: "category is required",
   InvalidCategory: "category id is invalid",
+  Updated : 'option updated successfully'
 };
 
 module.exports = optionMessages;

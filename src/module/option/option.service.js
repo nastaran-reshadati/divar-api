@@ -50,7 +50,30 @@ class OptionService {
 
     return this.#model.create(optionDto);
   }
+  async update(id , optionDto){
+    const existOption = await this.checkExistById(id)
+    if(optionDto.category && isValidObjectId(optionDto.category)){
+      const category =  await this.#categoryService.checkExistById(optionDto.category)
+      optionDto.category = category.id
+    }else{
+      delete optionDto.category
+    }
 
+    if(optionDto.key){
+      optionDto.key = slugify(optionDto.key , {
+        trim : true , 
+        replacement :"_",
+        lower : true
+      })
+
+      let categoryId =  existOption.category
+
+      if(optionDto.category){ 
+        categoryId = optionDto.category}
+      await this.alreadyExistByCategoryAndKey(optionDto.key , categoryId , id)
+
+    }
+  }
   async remove(id) {
      
   }
@@ -119,8 +142,6 @@ class OptionService {
     // console.dir(options[0], { depth: null });
   }
 
-
- 
   async alreadyExistBySlug(slug) {
 
     return null;
@@ -145,6 +166,11 @@ class OptionService {
 
      return null
   }
+  async alreadyExistByCategoryAndKey(key, category, exceptionId = null) {
+        const isExist = await this.#model.findOne({category, key , _id : {$ne : exceptionId}});
+        if(isExist) throw new createHttpError.Conflict(OptionMessage.AlreadyExist);
+        return null;
+   }
 }
 
 module.exports = new OptionService();
